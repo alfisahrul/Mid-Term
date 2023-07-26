@@ -1,0 +1,28 @@
+@startuml
+
+entity videoThumbnail{
+   *idVideo
+    ---
+    urlImage
+    thumbnail
+
+}
+
+
+entity commentList{
+    username
+    comment
+    timestamp
+}
+entity product{
+    *idProduct
+    ---
+    urlProduct
+    title
+    price
+}
+
+
+
+
+
