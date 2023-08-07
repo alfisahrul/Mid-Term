@@ -19,9 +19,9 @@ const start = () =>{
     app.use(videoRouter);
     app.use(commentRouter);
     app.use(productRouter);
-    const port = process.env.MONGODB_HOST
-    app.listen(port,()=>{
-        console.log(`Server listen to PORT ${port}`);
+
+    app.listen(mongoHost,()=>{
+        console.log(`Server listen to PORT ${mongoHost}`);
     })
 }
 
