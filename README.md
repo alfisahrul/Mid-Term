@@ -35,7 +35,7 @@ http://localhost:5173
 ```
 
 
-## Database Structure
+## 📁Database Structure
 Database: `mid_term_db`
 
 Colletions:
@@ -81,28 +81,16 @@ Colletions:
     }
     ```
 
-## API Structure
+## 🌐API Structure
 Flow from request to get response.
 ### Videos
----
-**POST /videos**
-```
-request -> routes -> controller [createVideo()] -> services [createVideoServices()] -> repository [addVideo()] -> response
 ```
 **GET /videos**
 ```
 request -> routes -> controller [getAllVideos()] -> services [getAllVideosServices()] -> repository [getAllVideos()] -> response
 ```
-**GET /videos/:id**
-```
-request -> routes -> controller [getVideoById()] -> services [getVideoByIdServices()] -> repository [getVideoById()] -> response
-```
-
 ### Products
 ---
-**POST /products**
-```
-request -> routes -> controller [createProduct()] -> services [createProductServices()] -> repository [addProduct()] -> response
 ```
 **GET /videos/:id/products**
 ```
