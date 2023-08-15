@@ -9,8 +9,8 @@ dotenv.config();
 
 const start = () =>{
     const app = express();
-    const mongoHost = process.env.MONGODB_HOST;
-
+    const mongoHost = process.env.MONGO_HOST;
+    const port = process.env.PORT
     mongodbConn(mongoHost);
 
     app.use(express.json());
@@ -19,9 +19,12 @@ const start = () =>{
     app.use(videoRouter);
     app.use(commentRouter);
     app.use(productRouter);
+    console.log("MongoDB Host:", mongoHost);
 
-    app.listen(mongoHost,()=>{
-        console.log(`Server listen to PORT ${mongoHost}`);
+
+
+    app.listen(port,()=>{
+        console.log(`Server listen to PORT ${port}`);
     })
 }
 

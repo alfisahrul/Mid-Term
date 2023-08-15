@@ -1,77 +1,331 @@
-# Backend
-**Video object**
+# GG Final Project
+
+Welcome to the TokpedPlay Clone App API documentation. This API allows you to manage videos, comments, and products.
+
+## 🛠️ Installation
+
+To build this project run on your local
+1. Use the package manager [npm].
+2. Clone the Server first
+```bash
+$ git clone https://github.com/alfisahrul/Tokped-Play-Clone-BE.git
+```
+
+3. Install the depedency for install the node_modules
+
+```
+$ npm install
+```
+4. For the backend or server you should do this first to add database
+
+```
+$ node seed.js
+``` 
+
+5. Last, you need to run the server and make sure you are conneccted to the internet
+
+```
+$ npm run dev
+```
+
+Acces the website on your browser
+
+```
+http://localhost:5173
+```
+
+
+## Database Structure
+Database: `mid_term_db`
+
+Colletions:
+1. `videos` : This collection will store information about each video data.
+
+   document structure
+
+   **#Videos Object**
+    ```
+    {
+        _id: string
+        url_thumbnail: string
+    }
+    ```
+
+2. `products` : This collection will store information about each product data.
+
+   document structure
+
+   **#Products Object**
+    ```
+    {
+        _id: string
+        link: string
+        title: string
+        price: integer
+        video_id: string
+    }
+    ```
+
+3. `comments` : This collection will store information about each comment data.
+
+   document structure
+
+   **#Comments Object**
+    ```
+    {
+        _id: string
+        username: string
+        comment_text: string
+        video_id: string
+        created_at: string
+    }
+    ```
+
+## API Structure
+Flow from request to get response.
+### Videos
+---
+**POST /videos**
+```
+request -> routes -> controller [createVideo()] -> services [createVideoServices()] -> repository [addVideo()] -> response
+```
+**GET /videos**
+```
+request -> routes -> controller [getAllVideos()] -> services [getAllVideosServices()] -> repository [getAllVideos()] -> response
+```
+**GET /videos/:id**
+```
+request -> routes -> controller [getVideoById()] -> services [getVideoByIdServices()] -> repository [getVideoById()] -> response
+```
+
+### Products
+---
+**POST /products**
+```
+request -> routes -> controller [createProduct()] -> services [createProductServices()] -> repository [addProduct()] -> response
+```
+**GET /videos/:id/products**
+```
+request -> routes -> controller [getProductByVideoId()] -> services [getProductByVideoIdService()] -> repository [getProductByVideoId()] -> response
+```
+
+### Comments
+---
+**POST /comments**
+```
+request -> routes -> controller [createComment()] -> services [createCommentServices()] -> repository [addComment()] -> response
+```
+**GET /videos/:id/comments**
+```
+request -> routes -> controller [getCommentByVideoId()] -> services [getCommentByVideoIdService()] -> repository [getCommentByVideoId()] -> response
+```
+
+## List API
+### Videos
+#### **POST /videos**
+---
+Create a new video and return the new object
+* **URL Params**
+
+  None
+* **Headers**
+
+  Content-Type: application/json
+* **Body**
 ```
 {
-        url_thumbnail: {
-            type: String,
-            required: true,
-        }
+    url_thumbnail: string
 }
 ```
-**Post /videos**
-----
-Create new video
-
-**Get /videos/:id**
-----
-Get video thumbnail 
-
-
-**Comment object**
+* **Success Response**
+    - Code: 201 (CREATED)
+    - Content:
 ```
 {
-        username: {
-            type: String,
-            required: true,
-        },
-        comment_text: {
-            type: String,
-            required: true,
-        },
-        video_id: {
-            type: String,
-            required: true,
-        },
-        create_at: {
-            type: String,
-            default: Date.now,
-        }
+    data: {
+        _id: string,
+        url_thumbnail: string,
+    }
 }
 ```
 
-**Post /comments**
-----
-Creates a new comment
+#### **GET /videos**
+---
+Returns all videos in the system.
 
-**Get /videos/:video_id/comment**
-----
-Get comment by video id
+* **URL Params**
 
+  None
+* **Headers**
 
-**Product object**
+  Content-Type: application/json
+* **Body**
+
+  None
+* **Success Response**
+    - Code: 200 (OK)
+    - Content:
 ```
 {
-        link: {
-            type: String,
-        },
-        title: {
-            type: String,
-            required: true,
-        },
-        price: {
-            type: Number,
-            required: true,
-        },
-        video_id: {
-            type: String,
-            required: true,
-        }
+    data: [
+        {<video_object>},
+        {<video_object>},
+        {<video_object>}
+    ]
 }
 ```
-**Post /product**
-----
-Create new product
+#### **GET /videos/:id**
+---
+Returns the specified videos.
 
-**Get /videos/:video_id/product**
-----
-Get product by video id
+* **URL Params**
+
+  *Required:* `id=[integer]`
+* **Headers**
+
+  Content-Type: application/json
+* **Body**
+
+  None
+* **Success Response**
+    - Code: 200 (OK)
+    - Content:
+```
+{
+    data: {
+        _id: string,
+        url_thumbnail: string,
+    }
+}
+```
+* **Error Response**
+    - Code: 404 (NOT FOUND)
+    - Content: `{ error: "can't find the video id" }`
+
+### Products
+#### **POST /products**
+--- 
+Create a new product and return the new object
+* **URL Params**
+
+  None
+* **Headers**
+
+  Content-Type: application/json
+* **Body**
+```
+{
+    link: string,
+    title: string,
+    price: string,
+    video_id: string
+}
+```
+* **Success Response**
+    - Code: 201 (CREATED)
+    - Content:
+```
+{
+    data: {
+        _id: string,
+        link: string,
+        title: string,
+        price: string,
+        video_id: string
+    }
+}
+```
+#### **GET /videos/:id/products**
+---
+Returns the specified product by video id params.
+
+* **URL Params**
+
+  *Required:* `video_id=[integer]`
+* **Headers**
+
+  Content-Type: application/json
+* **Body**
+
+  None
+* **Success Response**
+    - Code: 200 (OK)
+    - Content:
+```
+{
+    data: {
+        _id: string,
+        link: string,
+        title: string,
+        price: string,
+        video_id: string
+    }
+}
+```
+* **Error Response**
+    - Code: 404 (NOT FOUND)
+    - Content: `{ error: "can't find the video id" }`
+
+
+### Comments
+#### **POST /comments**
+---
+Create a new comments and return the new object
+* **URL Params**
+
+  None
+* **Headers**
+
+  Content-Type: application/json
+* **Body**
+```
+{
+    username: string,
+    comment_text: string,
+    video_id: string
+}
+```
+* **Success Response**
+    - Code: 201 (CREATED)
+    - Content:
+```
+{
+    data: {
+        _id: string,
+        username: string,
+        comment_text: string,
+        video_id: string,
+        created_at: string
+    }
+}
+```
+**GET /videos/:id/comments**
+---
+Returns the specified comment by video id params.
+
+* **URL Params**
+
+  *Required:* `video_id=[integer]`
+* **Headers**
+
+  Content-Type: application/json
+* **Body**
+
+  None
+* **Success Response**
+    - Code: 200 (OK)
+    - Content:
+```
+{
+    data: {
+        _id: string,
+        username: string,
+        comment_text: string,
+        video_id: string,
+        created_at: string
+    }
+}
+```
+* **Error Response**
+    - Code: 404 (NOT FOUND)
+    - Content: `{ error: "can't find the video id" }`
